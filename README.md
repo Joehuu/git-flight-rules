@@ -7,7 +7,7 @@
 
 A [guide for astronauts](https://www.jsc.nasa.gov/news/columbia/fr_generic.pdf) (now, programmers using Git) about what to do when things go wrong.
 
->  *Flight Rules* are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why. Essentially, they are extremely detailed, scenario-specific standard operating procedures. [...]
+> *Flight Rules* are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why. Essentially, they are extremely detailed, scenario-specific standard operating procedures. [...]
 
 > NASA has been capturing our missteps, disasters and solutions since the early 1960s, when Mercury-era ground teams first started gathering "lessons learned" into a compendium that now lists thousands of problematic situations, from engine failure to busted hatch handles to computer glitches, and their solutions.
 
@@ -20,99 +20,100 @@ For clarity's sake all examples in this document use a customized bash prompt in
 All commands should work for at least git version 2.13.0. See the [git website](https://www.git-scm.com/) to update your local git version.
 
 [![Join the chat at https://gitter.im/k88hudson/git-flight-rules](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/k88hudson/git-flight-rules?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-  - [Repositories](#repositories)
-    - [I want to start a local repository](#i-want-to-start-a-local-repository)
-    - [I want to clone a remote repository](#i-want-to-clone-a-remote-repository)
-  - [Editing Commits](#editing-commits)
-    - [What did I just commit?](#what-did-i-just-commit)
-    - [I wrote the wrong thing in a commit message](#i-wrote-the-wrong-thing-in-a-commit-message)
-    - [I committed with the wrong name and email configured](#i-committed-with-the-wrong-name-and-email-configured)
-    - [I want to remove a file from the previous commit](#i-want-to-remove-a-file-from-the-previous-commit)
-    - [I want to delete or remove my last commit](#i-want-to-delete-or-remove-my-last-commit)
-    - [Delete/remove arbitrary commit](#deleteremove-arbitrary-commit)
-    - [I tried to push my amended commit to a remote, but I got an error message](#i-tried-to-push-my-amended-commit-to-a-remote-but-i-got-an-error-message)
-    - [I accidentally did a hard reset, and I want my changes back](#i-accidentally-did-a-hard-reset-and-i-want-my-changes-back)
-    - [I accidentally committed and pushed a merge](#i-accidentally-committed-and-pushed-a-merge)
-  - [Staging](#staging)
-    - [I need to add staged changes to the previous commit](#i-need-to-add-staged-changes-to-the-previous-commit)
-    - [I want to stage part of a new file, but not the whole file](#i-want-to-stage-part-of-a-new-file-but-not-the-whole-file)
-    - [I want to add changes in one file to two different commits](#i-want-to-add-changes-in-one-file-to-two-different-commits)
-    - [I want to stage my unstaged edits, and unstage my staged edits](#i-want-to-stage-my-unstaged-edits-and-unstage-my-staged-edits)
-  - [Unstaged Edits](#unstaged-edits)
-    - [I want to move my unstaged edits to a new branch](#i-want-to-move-my-unstaged-edits-to-a-new-branch)
-    - [I want to move my unstaged edits to a different, existing branch](#i-want-to-move-my-unstaged-edits-to-a-different-existing-branch)
-    - [I want to discard my local uncommitted changes (staged and unstaged)](#i-want-to-discard-my-local-uncommitted-changes-staged-and-unstaged)
-    - [I want to discard specific unstaged changes](#i-want-to-discard-specific-unstaged-changes)
-    - [I want to discard specific unstaged files](#i-want-to-discard-specific-unstaged-files)
-    - [I want to discard only my unstaged local changes](#i-want-to-discard-only-my-unstaged-local-changes)
-    - [I want to discard all of my untracked files](#i-want-to-discard-all-of-my-untracked-files)
-  - [Branches](#branches)
-    - [I want to list all branches](#i-want-to-list-all-branches)
-    - [Create a branch from a commit](#create-a-branch-from-a-commit)
-    - [I pulled from/into the wrong branch](#i-pulled-frominto-the-wrong-branch)
-    - [I want to discard local commits so my branch is the same as one on the server](#i-want-to-discard-local-commits-so-my-branch-is-the-same-as-one-on-the-server)
-    - [I committed to master instead of a new branch](#i-committed-to-master-instead-of-a-new-branch)
-    - [I want to keep the whole file from another ref-ish](#i-want-to-keep-the-whole-file-from-another-ref-ish)
-    - [I made several commits on a single branch that should be on different branches](#i-made-several-commits-on-a-single-branch-that-should-be-on-different-branches)
-    - [I want to delete local branches that were deleted upstream](#i-want-to-delete-local-branches-that-were-deleted-upstream)
-    - [I accidentally deleted my branch](#i-accidentally-deleted-my-branch)
-    - [I want to delete a branch](#i-want-to-delete-a-branch)
-    - [I want to delete multiple branches](#i-want-to-delete-multiple-branches)
-    - [I want to rename a branch](#i-want-to-rename-a-branch)
-    - [I want to checkout to a remote branch that someone else is working on](#i-want-to-checkout-to-a-remote-branch-that-someone-else-is-working-on)
-    - [I want to create a new remote branch from current local one](#i-want-to-create-a-new-remote-branch-from-current-local-one)
-    - [I want to set a remote branch as the upstream for a local branch](#i-want-to-set-a-remote-branch-as-the-upstream-for-a-local-branch)
-    - [I want to set my HEAD to track the default remote branch](#i-want-to-set-my-head-to-track-the-default-remote-branch)
-    - [I made changes on the wrong branch](#i-made-changes-on-the-wrong-branch)
-  - [Rebasing and Merging](#rebasing-and-merging)
-    - [I want to undo rebase/merge](#i-want-to-undo-rebasemerge)
-    - [I rebased, but I don't want to force push](#i-rebased-but-i-dont-want-to-force-push)
-    - [I need to combine commits](#i-need-to-combine-commits)
-      - [Safe merging strategy](#safe-merging-strategy)
-      - [I need to merge a branch into a single commit](#i-need-to-merge-a-branch-into-a-single-commit)
-      - [I want to combine only unpushed commits](#i-want-to-combine-only-unpushed-commits)
-      - [I need to abort the merge](#i-need-to-abort-the-merge)
-    - [Check if all commits on a branch are merged](#check-if-all-commits-on-a-branch-are-merged)
-    - [Possible issues with interactive rebases](#possible-issues-with-interactive-rebases)
-      - [The rebase editing screen says 'noop'](#the-rebase-editing-screen-says-noop)
-      - [There were conflicts](#there-were-conflicts)
-  - [Stash](#stash)
-    - [Stash all edits](#stash-all-edits)
-    - [Stash specific files](#stash-specific-files)
-    - [Stash with message](#stash-with-message)
-    - [Apply a specific stash from list](#apply-a-specific-stash-from-list)
-  - [Finding](#finding)
-    - [I want to find a string in any commit](#i-want-to-find-a-string-in-any-commit)
-    - [I want to find by author/committer](#i-want-to-find-by-authorcommitter)
-    - [I want to list commits containing specific files](#i-want-to-list-commits-containing-specific-files)
-    - [Find a tag where a commit is referenced](#find-a-tag-where-a-commit-is-referenced)
-  - [Submodules](#submodules)
-    - [Clone all submodules](#clone-all-submodules)
-    - [Remove a submodule](#remove-a-submodule)
-  - [Miscellaneous Objects](#miscellaneous-objects)
-    - [Restore a deleted file](#restore-a-deleted-file)
-    - [Delete tag](#delete-tag)
-    - [Recover a deleted tag](#recover-a-deleted-tag)
-    - [Deleted Patch](#deleted-patch)
-    - [Exporting a repository as a Zip file](#exporting-a-repository-as-a-zip-file)
-  - [Tracking Files](#tracking-files)
-    - [I want to change a file name's capitalization, without changing the contents of the file](#i-want-to-change-a-file-names-capitalization-without-changing-the-contents-of-the-file)
-    - [I want to overwrite local files when doing a git pull](#i-want-to-overwrite-local-files-when-doing-a-git-pull)
-    - [I want to remove a file from Git but keep the file](#i-want-to-remove-a-file-from-git-but-keep-the-file)
-    - [I want to revert a file to a specific revision](#i-want-to-revert-a-file-to-a-specific-revision)
-    - [I want to list changes of a specific file between commits or branches](#i-want-to-list-changes-of-a-specific-file-between-commits-or-branches)
-  - [Configuration](#configuration)
-    - [I want to add aliases for some Git commands](#i-want-to-add-aliases-for-some-git-commands)
-    - [I want to add an empty directory to my repository](#i-want-to-add-an-empty-directory-to-my-repository)
-    - [I want to cache a username and password for a repository](#i-want-to-cache-a-username-and-password-for-a-repository)
-    - [I want to make Git ignore permissions and filemode changes](#i-want-to-make-git-ignore-permissions-and-filemode-changes)
-    - [I want to set a global user](#i-want-to-set-a-global-user)
-    - [I want to add command line coloring for Git](#i-want-to-add-command-line-coloring-for-git)
-  - [I've no idea what I did wrong](#ive-no-idea-what-i-did-wrong)
+- [Repositories](#repositories)
+  - [I want to start a local repository](#i-want-to-start-a-local-repository)
+  - [I want to clone a remote repository](#i-want-to-clone-a-remote-repository)
+- [Editing Commits](#editing-commits)
+  - [What did I just commit?](#what-did-i-just-commit)
+  - [I wrote the wrong thing in a commit message](#i-wrote-the-wrong-thing-in-a-commit-message)
+  - [I committed with the wrong name and email configured](#i-committed-with-the-wrong-name-and-email-configured)
+  - [I want to remove a file from the previous commit](#i-want-to-remove-a-file-from-the-previous-commit)
+  - [I want to delete or remove my last commit](#i-want-to-delete-or-remove-my-last-commit)
+  - [Delete/remove arbitrary commit](#deleteremove-arbitrary-commit)
+  - [I tried to push my amended commit to a remote, but I got an error message](#i-tried-to-push-my-amended-commit-to-a-remote-but-i-got-an-error-message)
+  - [I accidentally did a hard reset, and I want my changes back](#i-accidentally-did-a-hard-reset-and-i-want-my-changes-back)
+  - [I accidentally committed and pushed a merge](#i-accidentally-committed-and-pushed-a-merge)
+- [Staging](#staging)
+  - [I need to add staged changes to the previous commit](#i-need-to-add-staged-changes-to-the-previous-commit)
+  - [I want to stage part of a new file, but not the whole file](#i-want-to-stage-part-of-a-new-file-but-not-the-whole-file)
+  - [I want to add changes in one file to two different commits](#i-want-to-add-changes-in-one-file-to-two-different-commits)
+  - [I want to stage my unstaged edits, and unstage my staged edits](#i-want-to-stage-my-unstaged-edits-and-unstage-my-staged-edits)
+- [Unstaged Edits](#unstaged-edits)
+  - [I want to move my unstaged edits to a new branch](#i-want-to-move-my-unstaged-edits-to-a-new-branch)
+  - [I want to move my unstaged edits to a different, existing branch](#i-want-to-move-my-unstaged-edits-to-a-different-existing-branch)
+  - [I want to discard my local uncommitted changes (staged and unstaged)](#i-want-to-discard-my-local-uncommitted-changes-staged-and-unstaged)
+  - [I want to discard specific unstaged changes](#i-want-to-discard-specific-unstaged-changes)
+  - [I want to discard specific unstaged files](#i-want-to-discard-specific-unstaged-files)
+  - [I want to discard only my unstaged local changes](#i-want-to-discard-only-my-unstaged-local-changes)
+  - [I want to discard all of my untracked files](#i-want-to-discard-all-of-my-untracked-files)
+- [Branches](#branches)
+  - [I want to list all branches](#i-want-to-list-all-branches)
+  - [Create a branch from a commit](#create-a-branch-from-a-commit)
+  - [I pulled from/into the wrong branch](#i-pulled-frominto-the-wrong-branch)
+  - [I want to discard local commits so my branch is the same as one on the server](#i-want-to-discard-local-commits-so-my-branch-is-the-same-as-one-on-the-server)
+  - [I committed to master instead of a new branch](#i-committed-to-master-instead-of-a-new-branch)
+  - [I want to keep the whole file from another ref-ish](#i-want-to-keep-the-whole-file-from-another-ref-ish)
+  - [I made several commits on a single branch that should be on different branches](#i-made-several-commits-on-a-single-branch-that-should-be-on-different-branches)
+  - [I want to delete local branches that were deleted upstream](#i-want-to-delete-local-branches-that-were-deleted-upstream)
+  - [I accidentally deleted my branch](#i-accidentally-deleted-my-branch)
+  - [I want to delete a branch](#i-want-to-delete-a-branch)
+  - [I want to delete multiple branches](#i-want-to-delete-multiple-branches)
+  - [I want to rename a branch](#i-want-to-rename-a-branch)
+  - [I want to checkout to a remote branch that someone else is working on](#i-want-to-checkout-to-a-remote-branch-that-someone-else-is-working-on)
+  - [I want to create a new remote branch from current local one](#i-want-to-create-a-new-remote-branch-from-current-local-one)
+  - [I want to set a remote branch as the upstream for a local branch](#i-want-to-set-a-remote-branch-as-the-upstream-for-a-local-branch)
+  - [I want to set my HEAD to track the default remote branch](#i-want-to-set-my-head-to-track-the-default-remote-branch)
+  - [I made changes on the wrong branch](#i-made-changes-on-the-wrong-branch)
+- [Rebasing and Merging](#rebasing-and-merging)
+  - [I want to undo rebase/merge](#i-want-to-undo-rebasemerge)
+  - [I rebased, but I don't want to force push](#i-rebased-but-i-dont-want-to-force-push)
+  - [I need to combine commits](#i-need-to-combine-commits)
+    - [Safe merging strategy](#safe-merging-strategy)
+    - [I need to merge a branch into a single commit](#i-need-to-merge-a-branch-into-a-single-commit)
+    - [I want to combine only unpushed commits](#i-want-to-combine-only-unpushed-commits)
+    - [I need to abort the merge](#i-need-to-abort-the-merge)
+  - [Check if all commits on a branch are merged](#check-if-all-commits-on-a-branch-are-merged)
+  - [Possible issues with interactive rebases](#possible-issues-with-interactive-rebases)
+    - [The rebase editing screen says 'noop'](#the-rebase-editing-screen-says-noop)
+    - [There were conflicts](#there-were-conflicts)
+- [Stash](#stash)
+  - [Stash all edits](#stash-all-edits)
+  - [Stash specific files](#stash-specific-files)
+  - [Stash with message](#stash-with-message)
+  - [Apply a specific stash from list](#apply-a-specific-stash-from-list)
+- [Finding](#finding)
+  - [I want to find a string in any commit](#i-want-to-find-a-string-in-any-commit)
+  - [I want to find by author/committer](#i-want-to-find-by-authorcommitter)
+  - [I want to list commits containing specific files](#i-want-to-list-commits-containing-specific-files)
+  - [Find a tag where a commit is referenced](#find-a-tag-where-a-commit-is-referenced)
+- [Submodules](#submodules)
+  - [Clone all submodules](#clone-all-submodules)
+  - [Remove a submodule](#remove-a-submodule)
+- [Miscellaneous Objects](#miscellaneous-objects)
+  - [Restore a deleted file](#restore-a-deleted-file)
+  - [Delete tag](#delete-tag)
+  - [Recover a deleted tag](#recover-a-deleted-tag)
+  - [Deleted Patch](#deleted-patch)
+  - [Exporting a repository as a Zip file](#exporting-a-repository-as-a-zip-file)
+- [Tracking Files](#tracking-files)
+  - [I want to change a file name's capitalization, without changing the contents of the file](#i-want-to-change-a-file-names-capitalization-without-changing-the-contents-of-the-file)
+  - [I want to overwrite local files when doing a git pull](#i-want-to-overwrite-local-files-when-doing-a-git-pull)
+  - [I want to remove a file from Git but keep the file](#i-want-to-remove-a-file-from-git-but-keep-the-file)
+  - [I want to revert a file to a specific revision](#i-want-to-revert-a-file-to-a-specific-revision)
+  - [I want to list changes of a specific file between commits or branches](#i-want-to-list-changes-of-a-specific-file-between-commits-or-branches)
+- [Configuration](#configuration)
+  - [I want to add aliases for some Git commands](#i-want-to-add-aliases-for-some-git-commands)
+  - [I want to add an empty directory to my repository](#i-want-to-add-an-empty-directory-to-my-repository)
+  - [I want to cache a username and password for a repository](#i-want-to-cache-a-username-and-password-for-a-repository)
+  - [I want to make Git ignore permissions and filemode changes](#i-want-to-make-git-ignore-permissions-and-filemode-changes)
+  - [I want to set a global user](#i-want-to-set-a-global-user)
+  - [I want to add command line coloring for Git](#i-want-to-add-command-line-coloring-for-git)
+- [I've no idea what I did wrong](#ive-no-idea-what-i-did-wrong)
 - [Other Resources](#other-resources)
   - [Books](#books)
   - [Tutorials](#tutorials)
@@ -177,6 +178,7 @@ If you wrote the wrong thing and the commit has not yet been pushed, you can do 
 ```sh
 $ git commit --amend --only
 ```
+
 This will open your default text editor, where you can edit the message. On the other hand, you can do this all in one command:
 
 ```sh
@@ -300,9 +302,11 @@ And you should be good to go.
 If you accidentally merged a feature branch to the main development branch before it was ready to be merged, you can still undo the merge. But there's a catch: A merge commit has more than one parent (usually two).
 
 The command to use
+
 ```sh
 (feature-branch)$ git revert -m 1 <commit>
 ```
+
 where the -m 1 option says to select parent number 1 (the branch into which the merge was made) as the parent to revert to.
 
 Note: the parent number is not a commit identifier. Rather, a merge commit has a line `Merge: 8e2ce2d 86ac2e7`. The parent number is the 1-based index of the desired parent on this line, the first identifier is number 1, the second is number 2, and so on.
@@ -321,7 +325,6 @@ If you already know you don't want to change the commit message, you can tell gi
 ```sh
 (my-branch*)$ git commit --amend -C HEAD
 ```
-
 
 <a name="commit-partial-new-file"></a>
 ### I want to stage part of a new file, but not the whole file
@@ -468,6 +471,7 @@ When you want to get rid of all of your unstaged local uncommitted changes
 ```sh
 $ git checkout .
 ```
+
 <a href="i-want-to-discard-all-my-untracked-files"></a>
 ### I want to discard all of my untracked files
 
@@ -501,6 +505,7 @@ $ git branch -a
 
 <a name="create-branch-from-commit"></a>
 ### Create a branch from a commit
+
 ```sh
 $ git checkout -b <branch> <SHA1_OF_COMMIT>
 ```
@@ -592,8 +597,8 @@ When you want to put it into a branch (maybe feature, maybe `develop`), you're i
 
 Say you have:
 
-  * branch `solution`, with the solution to your spike. One ahead of `develop`.
-  * branch `develop`, where you want to add your changes.
+- branch `solution`, with the solution to your spike. One ahead of `develop`.
+- branch `develop`, where you want to add your changes.
 
 You can solve it bringing the contents to your branch:
 
@@ -1013,6 +1018,7 @@ If everything is successful, you should see something like this:
 ```
 
 #### Safe merging strategy
+
 `--no-commit` performs the merge but pretends the merge failed and does not autocommit, giving the user a chance to inspect and further tweak the merge result before committing. `no-ff` maintains evidence that a feature branch once existed, keeping project history consistent.
 
 ```sh
@@ -1066,14 +1072,15 @@ This will tell you if any commits are in one but not the other, and will give yo
 #### The rebase editing screen says 'noop'
 
 If you're seeing this:
+
 ```
 noop
 ```
 
 That means you are trying to rebase against a branch that is at an identical commit, or is *ahead* of your current branch. You can try:
 
-* making sure your master branch is where it should be
-* rebase against `HEAD~2` or earlier instead
+- making sure your master branch is where it should be
+- rebase against `HEAD~2` or earlier instead
 
 <a name="merge-conflict"></a>
 #### There were conflicts
@@ -1201,11 +1208,11 @@ $ git log -S "string to find"
 
 Commons parameters:
 
-* `--source` means to show the ref name given on the command line by which each commit was reached.
+- `--source` means to show the ref name given on the command line by which each commit was reached.
 
-* `--all` means to start from every branch.
+- `--all` means to start from every branch.
 
-* `--reverse` prints in reverse order, it means that will show the first commit that made the change.
+- `--reverse` prints in reverse order, it means that will show the first commit that made the change.
 
 <a name="i-want-to-find-by-author-committer"></a>
 ### I want to find by author/committer
@@ -1505,46 +1512,47 @@ Using `git reset` it is then possible to change master back to the commit it was
 
 (copied and edited from [Source](https://www.atlassian.com/git/tutorials/rewriting-history/git-reflog)).
 
-# Other Resources
+## Other Resources
 
-## Books
+### Books
 
-* [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial) - A book by Michael Hartl covering Git from basics
-* [Pro Git](https://git-scm.com/book/en/v2) - Scott Chacon and Ben Straub's excellent book about Git
-* [Git Internals](https://github.com/pluralsight/git-internals-pdf) - Scott Chacon's other excellent book about Git
+- [Learn Enough Git to Be Dangerous](https://www.learnenough.com/git-tutorial) - A book by Michael Hartl covering Git from basics
+- [Pro Git](https://git-scm.com/book/en/v2) - Scott Chacon and Ben Straub's excellent book about Git
+- [Git Internals](https://github.com/pluralsight/git-internals-pdf) - Scott Chacon's other excellent book about Git
 
-## Tutorials
+### Tutorials
 
-* [19 Git Tips For Everyday Use](https://www.alexkras.com/19-git-tips-for-everyday-use) - A list of useful Git one liners
-* [Atlassian's Git tutorial](https://www.atlassian.com/git/tutorials) Get Git right with tutorials from beginner to advanced.
-* [Learn Git branching](https://learngitbranching.js.org/) An interactive web based branching/merging/rebasing tutorial
-* [Getting solid at Git rebase vs. merge](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa)
-* [Git Commands and Best Practices Cheat Sheet](https://zeroturnaround.com/rebellabs/git-commands-and-best-practices-cheat-sheet) - A Git cheat sheet in a blog post with more explanations
-* [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) - A tutorial that dives into Git's internals
-* [git-workflow](https://github.com/asmeurer/git-workflow) - [Aaron Meurer](https://github.com/asmeurer)'s howto on using Git to contribute to open source repositories
-* [GitHub as a workflow](https://hugogiraudel.com/2015/08/13/github-as-a-workflow/) - An interesting take on using GitHub as a workflow, particularly with empty PRs
-* [Githug](https://github.com/Gazler/githug) - A game to learn more common Git workflows
+- [19 Git Tips For Everyday Use](https://www.alexkras.com/19-git-tips-for-everyday-use) - A list of useful Git one liners
+- [Atlassian's Git tutorial](https://www.atlassian.com/git/tutorials) Get Git right with tutorials from beginner to advanced.
+- [Learn Git branching](https://learngitbranching.js.org/) An interactive web based branching/merging/rebasing tutorial
+- [Getting solid at Git rebase vs. merge](https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa)
+- [Git Commands and Best Practices Cheat Sheet](https://zeroturnaround.com/rebellabs/git-commands-and-best-practices-cheat-sheet) - A Git cheat sheet in a blog post with more explanations
+- [Git from the inside out](https://codewords.recurse.com/issues/two/git-from-the-inside-out) - A tutorial that dives into Git's internals
+- [git-workflow](https://github.com/asmeurer/git-workflow) - [Aaron Meurer](https://github.com/asmeurer)'s howto on using Git to contribute to open source repositories
+- [GitHub as a workflow](https://hugogiraudel.com/2015/08/13/github-as-a-workflow/) - An interesting take on using GitHub as a workflow, particularly with empty PRs
+- [Githug](https://github.com/Gazler/githug) - A game to learn more common Git workflows
 
-## Scripts and Tools
+### Scripts and Tools
 
-* [firstaidgit.io](http://firstaidgit.io/) A searchable selection of the most frequently asked Git questions
-* [git-extra-commands](https://github.com/unixorn/git-extra-commands) - a collection of useful extra Git scripts
-* [git-extras](https://github.com/tj/git-extras) - GIT utilities -- repo summary, repl, changelog population, author commit percentages and more
-* [git-fire](https://github.com/qw3rtman/git-fire) - git-fire is a Git plugin that helps in the event of an emergency by adding all current files, committing, and pushing to a new branch (to prevent merge conflicts).
-* [git-tips](https://github.com/git-tips/tips) - Small Git tips
-* [git-town](https://github.com/Originate/git-town) - Generic, high-level Git workflow support! http://www.git-town.com
+- [firstaidgit.io](http://firstaidgit.io/) A searchable selection of the most frequently asked Git questions
+- [git-extra-commands](https://github.com/unixorn/git-extra-commands) - a collection of useful extra Git scripts
+- [git-extras](https://github.com/tj/git-extras) - GIT utilities -- repo summary, repl, changelog population, author commit percentages and more
+- [git-fire](https://github.com/qw3rtman/git-fire) - git-fire is a Git plugin that helps in the event of an emergency by adding all current files, committing, and pushing to a new branch (to prevent merge conflicts).
+- [git-tips](https://github.com/git-tips/tips) - Small Git tips
+- [git-town](https://github.com/Originate/git-town) - Generic, high-level Git workflow support!
 
-## GUI Clients
-* [GitKraken](https://www.gitkraken.com/) - The downright luxurious Git client,for Windows, Mac & Linux
-* [git-cola](https://git-cola.github.io/) - another Git client for Windows and OS X
-* [GitUp](https://github.com/git-up/GitUp) - A newish GUI that has some very opinionated ways of dealing with Git's complications
-* [gitx-dev](https://rowanj.github.io/gitx/) - another graphical Git client for OS X
-* [Sourcetree](https://www.sourcetreeapp.com/) - Simplicity meets power in a beautiful and free Git GUI. For Windows and Mac.
-* [Tower](https://www.git-tower.com/) - graphical Git client for OS X (paid)
-* [tig](https://jonas.github.io/tig/) - terminal text-mode interface for Git
-* [Magit](https://magit.vc/) - Interface to Git implemented as an Emacs package.
-* [GitExtensions](https://github.com/gitextensions/gitextensions) - a shell extension, a Visual Studio 2010-2015 plugin and a standalone Git repository tool.
-* [Fork](https://git-fork.com/) - a fast and friendly Git client for Mac (beta)
-* [gmaster](https://gmaster.io/) - a Git client for Windows that has 3-way merge, analyze refactors, semantic diff and merge (beta)
-* [gitk](https://git-scm.com/docs/gitk) - a Git client for linux to allow simple view of repo state.
-* [SublimeMerge](https://www.sublimemerge.com/) - Blazing fast, extensible client that provides 3-way merges, powerful search and syntax highlighting, in active development.
+### GUI Clients
+
+- [GitKraken](https://www.gitkraken.com/) - The downright luxurious Git client,for Windows, Mac & Linux
+- [git-cola](https://git-cola.github.io/) - another Git client for Windows and OS X
+- [GitUp](https://github.com/git-up/GitUp) - A newish GUI that has some very opinionated ways of dealing with Git's complications
+- [gitx-dev](https://rowanj.github.io/gitx/) - another graphical Git client for OS X
+- [Sourcetree](https://www.sourcetreeapp.com/) - Simplicity meets power in a beautiful and free Git GUI. For Windows and Mac.
+- [Tower](https://www.git-tower.com/) - graphical Git client for OS X (paid)
+- [tig](https://jonas.github.io/tig/) - terminal text-mode interface for Git
+- [Magit](https://magit.vc/) - Interface to Git implemented as an Emacs package.
+- [GitExtensions](https://github.com/gitextensions/gitextensions) - a shell extension, a Visual Studio 2010-2015 plugin and a standalone Git repository tool.
+- [Fork](https://git-fork.com/) - a fast and friendly Git client for Mac (beta)
+- [gmaster](https://gmaster.io/) - a Git client for Windows that has 3-way merge, analyze refactors, semantic diff and merge (beta)
+- [gitk](https://git-scm.com/docs/gitk) - a Git client for linux to allow simple view of repo state.
+- [SublimeMerge](https://www.sublimemerge.com/) - Blazing fast, extensible client that provides 3-way merges, powerful search and syntax highlighting, in active development.
